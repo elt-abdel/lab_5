@@ -38,8 +38,14 @@
       </div>
     </div>
     <script>
+      // event listener
+      let btn = document.querySelector(".button");
+      btn.addEventListener("click", clickclick, false);
+
+      // Variables
+      let instructions = document.querySelector(".instructions");
       let content = document.querySelector(".content");
-      // var content_i = content.innerHTML;
+
       // Header
       header = document.querySelector(".header");
       header.innerHTML = "Eltayeb's List of Countries";
@@ -48,41 +54,29 @@
       let olist = document.createElement("ol");
       olist.className = "countries";
 
-      let btn = document.querySelector(".button");
-      btn.addEventListener("click", clickclick, false);
-
       function clickclick() {
-        olist.innerHTML = " ";
+        // setting old list to empty, avoids tagging along
+        olist.innerHTML = "";
         content.appendChild(olist);
-        //remove instructions
-        var instructions = document.querySelector(".instructions");
 
+        //remove instructions
         if (instructions != null) {
           instructions.remove(1);
         }
 
-        // source https://stackoverflow.com/questions/5836833/create-an-array-with-random-values
-        // randomly generated N = 25 length array 0 <= A[N] <= 243
-
-        // need to make sure numbers are not dublicate and also make sure i have correct start and end
-        // let randomArr = Array.from({length: 25 }, () =>
-        //   Math.floor(Math.random() * 243)
-        // );
-
-        let randomArr = [];
-
-        randomArr = function randomrandom() {
-          for (let index = 0; index < 25; index++) {
-            var num = Math.floor(Math.random() * 243);
-            if (randomArr.includes(num)) {
-              index--;
-            } else {
-              randomArr.push(num);
-            }
-            console.log(randomArr);
+        // random unique array
+        var randomArr = [];
+        for (let n = 0; n < 25; n++) {
+          var num = Math.floor(Math.random() * 242);
+          if (randomArr.includes(num)) {
+            n--;
+          } else {
+            randomArr.push(num);
           }
-        };
-        console.log(randomArr);
+        }
+
+        // sort random array
+        randomArr.sort(sortNumber);
 
         /* N.B. - For your lab, use the variable "countries" now available on the window space */
         const countries = [
@@ -336,19 +330,31 @@
         let rand25 = [];
         for (let i = 0; i < 25; i++) {
           rand25.push(
-            countries[25].code.bold() +
+            countries[randomArr[i]].code.bold() +
               " " +
-              countries[25].name
+              countries[randomArr[i]].name
           );
           let randCountry = document.createElement("li");
-
           randCountry.innerHTML = rand25[i];
           olist.appendChild(randCountry);
         }
-        // select content + add ol to content
-        //  content_i = `${olist}`;
-        // select content + add ol to content
-        // content.insertAdjacentElement("beforeend", olist);
+
+        // console log countries not used
+        console.clear();
+
+        for (let r = 0; r < countries.length; r++) {
+          if (
+            rand25.includes(countries[r].code.bold() + " " + countries[r].name)
+          ) {
+            r++;
+          } else {
+            console.log(countries[r].name);
+          }
+        }
+      }
+
+      function sortNumber(a, b) {
+        return a - b;
       }
     </script>
   </body>
