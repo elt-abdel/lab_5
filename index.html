@@ -38,26 +38,22 @@
       </div>
     </div>
     <script>
+      let content = document.querySelector(".content");
+      // var content_i = content.innerHTML;
       // Header
       header = document.querySelector(".header");
       header.innerHTML = "Eltayeb's List of Countries";
 
       // new list
-      var olist = document.createElement("ol");
+      let olist = document.createElement("ol");
       olist.className = "countries";
 
       let btn = document.querySelector(".button");
       btn.addEventListener("click", clickclick, false);
 
-      deleteli = document.querySelector(".delete");
-
       function clickclick() {
-        if (deleteli != null) {
-          for (let x = 0; x < 25; x++) {
-            olist.removeChild(deleteli);
-          }
-        }
-
+        olist.innerHTML = " ";
+        content.appendChild(olist);
         //remove instructions
         var instructions = document.querySelector(".instructions");
 
@@ -69,9 +65,24 @@
         // randomly generated N = 25 length array 0 <= A[N] <= 243
 
         // need to make sure numbers are not dublicate and also make sure i have correct start and end
-        var randomArr = Array.from({ length: 25 }, () =>
-          Math.floor(Math.random() * 243)
-        );
+        // let randomArr = Array.from({length: 25 }, () =>
+        //   Math.floor(Math.random() * 243)
+        // );
+
+        let randomArr = [];
+
+        randomArr = function randomrandom() {
+          for (let index = 0; index < 25; index++) {
+            var num = Math.floor(Math.random() * 243);
+            if (randomArr.includes(num)) {
+              index--;
+            } else {
+              randomArr.push(num);
+            }
+            console.log(randomArr);
+          }
+        };
+        console.log(randomArr);
 
         /* N.B. - For your lab, use the variable "countries" now available on the window space */
         const countries = [
@@ -325,18 +336,19 @@
         let rand25 = [];
         for (let i = 0; i < 25; i++) {
           rand25.push(
-            countries[randomArr[i]].code.bold() +
+            countries[25].code.bold() +
               " " +
-              countries[randomArr[i]].name
+              countries[25].name
           );
           let randCountry = document.createElement("li");
-          randCountry.className = "delete";
+
           randCountry.innerHTML = rand25[i];
           olist.appendChild(randCountry);
         }
         // select content + add ol to content
-        const content = document.querySelector(".content");
-        content.insertAdjacentElement("beforeend", olist);
+        //  content_i = `${olist}`;
+        // select content + add ol to content
+        // content.insertAdjacentElement("beforeend", olist);
       }
     </script>
   </body>
